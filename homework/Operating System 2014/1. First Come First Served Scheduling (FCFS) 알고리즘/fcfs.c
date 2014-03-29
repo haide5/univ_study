@@ -35,7 +35,7 @@ int main()
 	//프로세스 정렬
 	ProcessSort(processors,num);
 
-	//FCFS 알고리즘
+	//FCFS Waiting Time 알고리즘
 	/*********************************************************************************************************/
 	for(i=0;i<num;i++){
 		if(i==0){
@@ -75,6 +75,7 @@ int main()
 
 	return 0;
 }
+//FCFS 정렬 알고리즘
 void ProcessSort(Process array[], int num)
 {
 	int i,j;
