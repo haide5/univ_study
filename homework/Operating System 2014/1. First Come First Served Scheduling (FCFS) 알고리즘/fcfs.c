@@ -25,25 +25,24 @@ int main()
 	fscanf(input,"%d",&num);
 
 	if(num>=50)
-	printf("Àß¸øµÈ °ª ÀÔ·Â data error");
-	
+		printf("ì˜ëª»ëœ ê°’ ì…ë ¥ data error");
+
 	for(i=0;i<num;i++)
 	{
 		fscanf(input,"%d %d %d",&(processors[i].pNum),&(processors[i].arriveTime),&(processors[i].burstTime));
 	}
 
-	//ÇÁ·Î¼¼½º Á¤·Ä
+	//í”„ë¡œì„¸ìŠ¤ ì •ë ¬
 	ProcessSort(processors,num);
 
-
-	//Waiting Time±¸ÇÏ´Â °Å
-
+	//FCFS ì•Œê³ ë¦¬ì¦˜
+	/*********************************************************************************************************/
 	for(i=0;i<num;i++){
 		if(i==0){
 			totalTime += processors[i].arriveTime + processors[i].burstTime;
 			processors[0].waitTime = 0;
 		}else{
-			if(processors[i].arriveTime <= totalTime){ //ÃÑ°É¸°½Ã°£º¸´Ù ÇÁ·Î¼¼¼­ µµÂø½Ã°£ÀÌ ÀÛÀ¸¸é
+			if(processors[i].arriveTime <= totalTime){ //ì´ê±¸ë¦°ì‹œê°„ë³´ë‹¤ í”„ë¡œì„¸ì„œ ë„ì°©ì‹œê°„ì´ ì‘ìœ¼ë©´
 				processors[i].waitTime = totalTime - processors[i].arriveTime;
 				totalTime += processors[i].burstTime;
 			}else{
@@ -51,12 +50,15 @@ int main()
 				totalTime = (processors[i].burstTime + processors[i].arriveTime);
 			}
 
-				//totalTime += processors[i].burstTime;
-				//processors[i].waitTime = totalTime - processors[i].arriveTime - processors[i].burstTime;
+			//totalTime += processors[i].burstTime;
+			//processors[i].waitTime = totalTime - processors[i].arriveTime - processors[i].burstTime;
 		}
 	}
 
-	//Å×½ºÆÃ
+	/*********************************************************************************************************/
+
+
+	//í…ŒìŠ¤íŒ…
 	for(i=0;i<num;i++){
 		printf("%d %d %d %d\n",processors[i].pNum,processors[i].arriveTime,processors[i].burstTime,processors[i].waitTime);
 	}
@@ -64,7 +66,7 @@ int main()
 	for(i=0;i<num;i++)
 		totalWaitTime += processors[i].waitTime;
 
-	//printf("ÇÕ : %d\n",totalWaitTime);
+	//printf("í•© : %d\n",totalWaitTime);
 
 	fprintf(output,"%d",totalWaitTime);
 
@@ -77,14 +79,14 @@ void ProcessSort(Process array[], int num)
 {
 	int i,j;
 	Process temp;
-	//¹öºíÁ¤·ÄÀ» ÀÌ¿ëÇÏ¿© µµÂø½Ã°£ ¼ø¼­´ë·Î Á¤·Ä
+	//ë²„ë¸”ì •ë ¬ì„ ì´ìš©í•˜ì—¬ ë„ì°©ì‹œê°„ ìˆœì„œëŒ€ë¡œ ì •ë ¬
 	for(i=0;i<num-1;i++){
 		for(j=0;j<(num-i)-1;j++){
 			if(array[j].arriveTime > array[j+1].arriveTime){
 				temp = array[j];
 				array[j] = array[j+1];
 				array[j+1] = temp;
-				//µµÂø½Ã°£ÀÌ °°À¸¸é ÇÁ·Î¼¼½º ¹øÈ£°¡ ÀÛÀº°Í ¾ÕÀ¸·Î
+				//ë„ì°©ì‹œê°„ì´ ê°™ìœ¼ë©´ í”„ë¡œì„¸ìŠ¤ ë²ˆí˜¸ê°€ ì‘ì€ê²ƒ ì•ìœ¼ë¡œ
 			}else if(array[j].arriveTime == array[j+1].arriveTime){
 				if(array[j].pNum > array[j+1].pNum){
 					temp = array[j];
