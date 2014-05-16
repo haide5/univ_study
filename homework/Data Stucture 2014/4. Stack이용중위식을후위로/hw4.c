@@ -10,9 +10,9 @@ typedef struct _stackNode
 	struct _stackNode *next;
 }StackNode;
 
-//½ºÅÃÀÇ top ³ëµå¸¦ °¡¸£Å°´Â Æ÷ÀÎÅÍ
+//ìŠ¤íƒì˜ top ë…¸ë“œë¥¼ ê°€ë¥´í‚¤ëŠ” í¬ì¸í„°
 StackNode *top;
-//ÇÔ¼ö¼±¾ğ
+//í•¨ìˆ˜ì„ ì–¸
 void push(char item);
 char pop();
 char peek();
@@ -25,63 +25,63 @@ int main()
 
 	while(TRUE)
 	{
-			fscanf(inp,"%c",&inpChar);
-			//°ø¹é¹®ÀÚ¸¦ ¸¸³ª¸é ½ºÅÃ¾ÈÀÇ °Í ¸ğµÎ Ãâ·Â½ÃÅ´
-			if(inpChar == '\n'){
-				while(top != NULL){
-					fprintf(out,"%c",pop());
-				}
-				fprintf(out,"\n");
-				//±×´ÙÀ½ ¹®ÀÚ¸¦ È®ÀÎÇÑ´Ù.
-				fscanf(inp,"%c",&inpChar);
-				//'*'ÀÎÁö È®ÀÎÇÏ°í ¸Â´Ù¸é ÇÁ·Î±×·¥Á¾·á
-				if(inpChar == '*'){
-					fprintf(out,"*");				
-					break;
-				}
+		fscanf(inp,"%c",&inpChar);
+		//ê³µë°±ë¬¸ìë¥¼ ë§Œë‚˜ë©´ ìŠ¤íƒì•ˆì˜ ê²ƒ ëª¨ë‘ ì¶œë ¥ì‹œí‚´
+		if(inpChar == '\n'){
+			while(top != NULL){
+				fprintf(out,"%c",pop());
 			}
+			fprintf(out,"\n");
+			//ê·¸ë‹¤ìŒ ë¬¸ìë¥¼ í™•ì¸í•œë‹¤.
+			fscanf(inp,"%c",&inpChar);
+			//'*'ì¸ì§€ í™•ì¸í•˜ê³  ë§ë‹¤ë©´ í”„ë¡œê·¸ë¨ì¢…ë£Œ
+			if(inpChar == '*'){
+				fprintf(out,"*");				
+				break;
+			}
+		}
 
-			//ÇöÀçÀÔ·Â¹ŞÀº ¹®ÀÚ°¡ ¼ıÀÚ¶ó¸é ±×´ë·Î Ãâ·Â
-			if(isdigit(inpChar)){
-				fprintf(out,"%c",inpChar);
-			}else if(inpChar == '('){
-			//¿©´Â °ıÈ£¸¦ ¸¸³ª¸é pushÇÔ
+		//í˜„ì¬ì…ë ¥ë°›ì€ ë¬¸ìê°€ ìˆ«ìë¼ë©´ ê·¸ëŒ€ë¡œ ì¶œë ¥
+		if(isdigit(inpChar)){
+			fprintf(out,"%c",inpChar);
+		}else if(inpChar == '('){
+			//ì—¬ëŠ” ê´„í˜¸ë¥¼ ë§Œë‚˜ë©´ pushí•¨
+			push(inpChar);
+		}else if(inpChar == ')'){
+			//ë‹«ëŠ” ê´„í˜¸ë¥¼ ë§Œë‚˜ë©´ ì—¬ëŠ”ê´„í˜¸ ì „ê¹Œì§€ ëª¨ë‘ popì‹œí‚´;
+			while(top != NULL && top->data != '('){
+				fprintf(out,"%c",pop());
+			}
+			//ê·¸ë¦¬ê³  ì—¬ëŠ”ê´„í˜¸ë¥¼ popì‹œì¼œì„œ ê´„í˜¸ë¥¼ ì¶œë ¥ì‹œí‚¤ì§€ ì•Šë„ë¡ í•œë‹¤.
+			pop();
+		}else{
+			//ì—°ì‚°ì ì²˜ë¦¬
+			//ìŠ¤íƒì€ ìš°ì„ ìˆœìœ„ê°€ ë†’ì€ ìˆœì„œëŒ€ë¡œ ìŒ“ì¸ë‹¤
+			if(inpChar == '*' || inpChar == '/'){
+				//ìŠ¤íƒì•ˆì˜ ì—°ì‚°ì ìš°ì„ ìˆœìœ„ê°€ ê°™ìœ¼ë©´ ìŠ¤íƒì•ˆì˜ ì›ì†Œë¥¼ popì‹œí‚¤ê³  pushí•œë‹¤
+				if(top == NULL){
 					push(inpChar);
-			}else if(inpChar == ')'){
-			//´İ´Â °ıÈ£¸¦ ¸¸³ª¸é ¿©´Â°ıÈ£ Àü±îÁö ¸ğµÎ pop½ÃÅ´;
-				while(top != NULL && top->data != '('){
-					fprintf(out,"%c",pop());
-				}
-				//±×¸®°í ¿©´Â°ıÈ£¸¦ pop½ÃÄÑ¼­ °ıÈ£¸¦ Ãâ·Â½ÃÅ°Áö ¾Êµµ·Ï ÇÑ´Ù.
-				pop();
-			}else{
-				//¿¬»êÀÚ Ã³¸®
-				//½ºÅÃÀº ¿ì¼±¼øÀ§°¡ ³ôÀº ¼ø¼­´ë·Î ½×ÀÎ´Ù
-				if(inpChar == '*' || inpChar == '/'){
-					//½ºÅÃ¾ÈÀÇ ¿¬»êÀÚ ¿ì¼±¼øÀ§°¡ °°À¸¸é ½ºÅÃ¾ÈÀÇ ¿ø¼Ò¸¦ pop½ÃÅ°°í pushÇÑ´Ù
-					if(top == NULL){
-						push(inpChar);
-					}else{
-						if(peek() == '*' || peek() == '/'){
-							while(top != NULL && top->data != '('){
-								fprintf(out,"%c",pop());
-							}
-						}
-						push(inpChar);
-					}
 				}else{
-				//¾Æ´Ï¶ó¸é + - ¸¦ Ã³¸®ÇØ¾ß°ÙÁö
-					if(top == NULL){
-						push(inpChar);
-					}else{
-						// + ¿Í - ´Â ¿ì¼±¼øÀ§°¡ ³·À¸¹Ç·Î ½ºÅÃ¿¡ ¸ğµÎ pop½ÃÅ°°í pushÇÑ´Ù.
+					if(peek() == '*' || peek() == '/'){
 						while(top != NULL && top->data != '('){
 							fprintf(out,"%c",pop());
 						}
-						push(inpChar);
 					}
+					push(inpChar);
+				}
+			}else{
+				//ì•„ë‹ˆë¼ë©´ + - ë¥¼ ì²˜ë¦¬í•´ì•¼ê²Ÿì§€
+				if(top == NULL){
+					push(inpChar);
+				}else{
+					// + ì™€ - ëŠ” ìš°ì„ ìˆœìœ„ê°€ ë‚®ìœ¼ë¯€ë¡œ ìŠ¤íƒì— ëª¨ë‘ popì‹œí‚¤ê³  pushí•œë‹¤.
+					while(top != NULL && top->data != '('){
+						fprintf(out,"%c",pop());
+					}
+					push(inpChar);
 				}
 			}
+		}
 	}//end While
 
 	fclose(inp);
@@ -99,7 +99,7 @@ char pop()
 	char item;
 	StackNode *temp = top;
 
-	//½ºÅÃÀÌ °ø¹é¸®½ºÆ® ÀÌ¸é
+	//ìŠ¤íƒì´ ê³µë°±ë¦¬ìŠ¤íŠ¸ ì´ë©´
 	if(top == NULL)
 		return 0;
 	else{
